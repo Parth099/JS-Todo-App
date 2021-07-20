@@ -1,7 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;1,200;1,300;1,400;1,600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500&display=swap");
 
 :root {
-  --link-active: red;
+  --link-active: #4c8bf5;
+}
+body {
+  font-family: "Montserrat", sans-serif;
 }
 .head-cont {
   background-color: #4c8bf5;
@@ -31,7 +35,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  background-color: slategray;
+  background-color: rgb(171, 193, 216);
   font-family: "Titillium Web", sans-serif;
   transition: margin-left 0.5s;
 }
@@ -52,10 +56,10 @@
   transition: 0.2s;
 }
 
-.sideMenu a:hover {
+.sideMenu a.link:hover {
   color: var(--link-active);
 }
-.sideMenu a.active {
+.sideMenu a.link.active {
   color: var(--link-active);
 }
 
@@ -63,4 +67,60 @@
   margin-left: 250px;
   transition: margin-left 0.5s;
   padding: 10px;
+  max-width: 1000px;
+}
+.home-title {
+  margin-bottom: 15px;
+}
+
+.table-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 0.5px gray solid;
+  padding: 3px;
+}
+.title {
+  font-weight: 600;
+}
+.table-row-side {
+  display: flex;
+}
+.dueDate {
+  width: 150px;
+}
+.priority {
+  width: 100px;
+}
+.low {
+  color: #04aa6d;
+}
+.medium {
+  color: #db4c3f;
+}
+.high {
+  color: red;
+}
+.check-box-cont {
+  display: flex;
+}
+.crossout {
+  text-decoration: line-through;
+  color: gray;
+}
+.project-link {
+  display: flex;
+}
+
+#add-project-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  padding: 0;
+}
+#add-project-btn:hover {
+  background-color: rgba(255, 255, 255, 0.377);
+  color: var(--link-active);
 }
