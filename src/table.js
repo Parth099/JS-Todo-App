@@ -1,10 +1,13 @@
+import TaskTrackerMain from "./index.js";
+
 function checkboxListener(event) {
   const parentNode = event.currentTarget.parentNode.parentNode;
   if (typeof parentNode === "undefined") {
     return;
   }
   parentNode.classList.toggle("crossout");
-  id = parentNode.getAttribute("data-task-id");
+  const id = parentNode.getAttribute("data-task-id");
+  TaskTrackerMain.completeXOR(id);
 }
 
 class DOMTaskTable {
@@ -28,9 +31,6 @@ class DOMTaskTable {
     tableRowCont = document.createElement("div");
     tableRowCont.classList.add("table-row");
     tableRowCont.setAttribute("data-task-id", taskId);
-    if (isCompleted) {
-      tableRowCont.classList.toggle("crossout");
-    }
 
     title = document.createElement("p");
     title.classList.toggle("table-title");
@@ -40,6 +40,11 @@ class DOMTaskTable {
     ckbx.setAttribute("type", "checkbox");
     ckbx.classList.add("table-ckbx");
     ckbx.addEventListener("click", checkboxListener);
+
+    if (isCompleted) {
+      tableRowCont.classList.toggle("crossout");
+      ckbx.setAttribute("checked", "true");
+    }
 
     titleAndCkbxCont = document.createElement("div");
     titleAndCkbxCont.appendChild(ckbx);
@@ -69,7 +74,13 @@ class DOMTaskTable {
     return tableRowCont;
   }
   createTableTitle() {
-    let ele = this.createTableRow("Title", "Due Date", "Priority", "");
+    let ele = this.createTableRow(
+      "Title",
+      "Due Date",
+      "Priority",
+      "",
+      "table-head"
+    );
     ele.classList.toggle("title");
     ele.querySelector("input").remove();
     return ele;

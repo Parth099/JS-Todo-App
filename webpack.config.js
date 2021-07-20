@@ -3,9 +3,9 @@ const path = require("path");
 module.exports = {
   entry: [
     "./src/index.js",
-    "./src/homepage.js",
-    "/src/table.js",
-    "/src/taskTracker.js",
+    "./src/pageLoader.js",
+    "./src/table.js",
+    "./src/taskTracker.js",
   ],
   output: {
     filename: "main.js",

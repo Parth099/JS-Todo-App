@@ -1,6 +1,14 @@
 class Task {
   static id = -1;
-  constructor(title, description, dueDate, priority, notes, isComplete) {
+  constructor(
+    title,
+    description,
+    dueDate,
+    priority,
+    notes,
+    isComplete,
+    project
+  ) {
     this.title = title;
     this.description = description;
     this.dueDate = "none";
@@ -8,6 +16,7 @@ class Task {
     this.notes = notes;
     this.isComplete = isComplete;
     this.id = `T${++Task.id}`;
+    this.project = project;
   }
 
   setId() {}
@@ -35,6 +44,10 @@ class Task {
   get isComplete() {
     return this._isComplete;
   }
+
+  get project() {
+    return this._project;
+  }
   //setters
   set title(t) {
     this._title = t;
@@ -57,7 +70,11 @@ class Task {
   }
 
   set isComplete(c) {
-    this._isComplete = Boolean(c);
+    this._isComplete = c;
+  }
+
+  set project(p) {
+    this._project = p;
   }
 }
 
