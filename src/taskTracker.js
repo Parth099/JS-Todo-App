@@ -12,18 +12,17 @@ class TaskTracker {
       new Task("Learn R/B Trees", "6", "none", "Low", "---", false, ""),
       new Task("Learn Graphs", "7", "none", "Low", "---", false, "today"),
       new Task("Learn Tuples", "8", "none", "Medium", "---", true, "today"),
-      new Task("Make Trays", "8", "none", "Medium", "---", false, "Subway"),
+      new Task("Make Trays", "8", "none", "Medium", "---", false, "subway"),
     ];
   }
   get currFocus() {
     return this.focus;
   }
   set currFocus(cf) {
-    this.focus = cf;
+    this.focus = cf.toLowerCase();
   }
 
   getTasks() {
-    console.log(this.projects);
     if (this.currFocus == "home") {
       return this.projects;
     }
@@ -33,6 +32,16 @@ class TaskTracker {
   completeXOR(id) {
     const selectedTask = this.getTaskById(id);
     selectedTask.isComplete ^= 1; //xor
+  }
+  projectCounter() {
+    const collections = {};
+    this.projects.forEach((task) => {
+      if (typeof collections[task.project] === "undefined") {
+        collections[task.project] = 0;
+      }
+      collections[task.project]++;
+    });
+    return collections;
   }
 }
 

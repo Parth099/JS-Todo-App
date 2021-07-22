@@ -1,4 +1,5 @@
-import TaskTrackerMain from "./index.js";
+import { TaskTrackerMain } from "./index.js";
+import settingsIcn from "./img/settings.png";
 
 function checkboxListener(event) {
   const parentNode = event.currentTarget.parentNode.parentNode;
@@ -13,7 +14,7 @@ function checkboxListener(event) {
 class DOMTaskTable {
   constructor(internalTaskArray) {
     this.tasks = internalTaskArray ?? [];
-    console.log(this.tasks);
+    //console.log(this.tasks);
   }
   createTableRow(titleText, dueDateText, prioText, isCompleted, taskId) {
     /*
@@ -26,7 +27,7 @@ class DOMTaskTable {
         </div>
     */
     let tableRowCont, title, ckbx, titleAndCkbxCont;
-    let flexSide, DueDate, Prio;
+    let flexSide, DueDate, Prio, modelOpener;
 
     tableRowCont = document.createElement("div");
     tableRowCont.classList.add("table-row");
@@ -65,6 +66,14 @@ class DOMTaskTable {
 
     DueDate.textContent = dueDateText;
     Prio.textContent = prioText;
+
+    if (taskId != "table-head") {
+      modelOpener = new Image();
+      modelOpener.src = settingsIcn;
+      modelOpener.classList.add("table-row-img");
+      modelOpener.setAttribute("data-modal-target", "#modal");
+      Prio.appendChild(modelOpener);
+    }
 
     flexSide.appendChild(DueDate);
     flexSide.appendChild(Prio);

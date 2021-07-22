@@ -3,6 +3,7 @@
 
 :root {
   --link-active: #4c8bf5;
+  --table-row-padding: 3px;
 }
 body {
   font-family: "Montserrat", sans-serif;
@@ -69,15 +70,17 @@ body {
   padding: 10px;
   max-width: 1000px;
 }
-.home-title {
+.page-title {
   margin-bottom: 15px;
+  font-size: 3rem;
 }
 
 .table-row {
   display: flex;
   justify-content: space-between;
   border-bottom: 0.5px gray solid;
-  padding: 3px;
+  padding: var(--table-row-padding);
+  position: relative;
 }
 .title {
   font-weight: 600;
@@ -89,7 +92,10 @@ body {
   width: 150px;
 }
 .priority {
+  display: flex;
   width: 100px;
+  justify-content: space-between;
+  align-content: center;
 }
 .low {
   color: #04aa6d;
@@ -123,4 +129,96 @@ body {
 #add-project-btn:hover {
   background-color: rgba(255, 255, 255, 0.377);
   color: var(--link-active);
+}
+
+/* MODAL STYLING START */
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  border: 0.5px black solid;
+  border-radius: 10px;
+  z-index: 10;
+  background-color: white;
+  width: 500px;
+  max-width: 80%;
+  transition: 200ms ease-in-out;
+}
+.modal.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+.modal-header {
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-header .title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.modal-header .close-button {
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  font-weight: bolder;
+}
+
+.modal-body {
+  padding: 10px 15px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.overlay.active {
+  pointer-events: all;
+  opacity: 1;
+}
+
+/* MODAL END */
+
+.table-row-img {
+  position: relative;
+  right: 0;
+  top: var(--table-row-padding);
+  width: 21px;
+  height: 21px;
+}
+
+.project-page-link-cont {
+  display: flex;
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin: 10px 0px;
+  width: 400px;
+  justify-content: space-between;
+}
+.project-page-link,
+.project-page-link-text {
+  padding: 10px;
+  border-radius: 30px;
+}
+.project-page-link {
+  cursor: pointer;
+  font-weight: 500;
+}
+.project-page-link:hover {
+  background: rgba(76, 139, 245, 0.3);
+}
+.project-page-link-text {
+  display: inline;
 }

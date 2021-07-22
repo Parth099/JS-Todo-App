@@ -4,7 +4,7 @@ module.exports = {
   entry: [
     "./src/index.js",
     "./src/pageLoader.js",
-    "./src/table.js",
+    "./src/DOMTaskTable.js",
     "./src/taskTracker.js",
   ],
   output: {
