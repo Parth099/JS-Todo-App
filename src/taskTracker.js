@@ -13,13 +13,18 @@ class TaskTracker {
       new Task("Learn Graphs", "7", "none", "Low", "---", false, "today"),
       new Task("Learn Tuples", "8", "none", "Medium", "---", true, "today"),
       new Task("Make Trays", "8", "none", "Medium", "---", false, "subway"),
+      new Task("Buy Zone 3 Pass", "8", "none", "High", "---", false, "college"),
+      new Task("Pick Classes", "8", "none", "High", "---", false, "college"),
     ];
   }
   get currFocus() {
     return this.focus;
   }
   set currFocus(cf) {
-    this.focus = cf.toLowerCase();
+    if (cf) {
+      cf = cf.toLowerCase();
+    }
+    this.focus = cf ?? "home";
   }
 
   getTasks() {

@@ -41,14 +41,14 @@ body {
   transition: margin-left 0.5s;
 }
 
-.sideMenu ul {
+.sideMenu ul.menu-main {
   list-style: none;
   padding: 0;
   margin-top: 65px;
-  margin-left: 45px;
+  margin-left: 30px;
 }
 
-.sideMenu a {
+.sideMenu a.link {
   text-decoration: none;
   margin-bottom: 30px;
   font-size: 2rem;
@@ -63,7 +63,13 @@ body {
 .sideMenu a.link.active {
   color: var(--link-active);
 }
-
+.sideMenu li:last-of-type a {
+  margin-bottom: 0;
+}
+#add-project-btn {
+  color: white;
+  font-size: 2rem;
+}
 .content {
   margin-left: 250px;
   transition: margin-left 0.5s;
@@ -221,4 +227,25 @@ body {
 }
 .project-page-link-text {
   display: inline;
+}
+
+.project-nav-ext {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+.project-nav-ext a:link,
+.project-nav-ext a:visited {
+  color: white;
+  font-size: 1.25rem;
+  text-decoration: none;
+  position: relative;
+}
+.project-nav-ext {
+  width: 200px;
+  margin-left: auto;
+  list-style-type: none;
+}
+ul.project-nav-ext > a.active {
+  border: 1px red solid;
 }

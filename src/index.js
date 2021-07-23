@@ -13,10 +13,12 @@ export const TaskTrackerMain = new TaskTracker();
 //import Task
 attachNav("img.header-img[data-nav-icon]"); //nav gains hide and show func
 //console.log(taskList)
-renderPage();
 
-export const links = document.querySelectorAll("#sideMenu > ul > li > a.link");
+export const links = document.querySelectorAll(
+  "#sideMenu > ul.menu-main > li > a.link"
+);
 let currPage = "Home";
+renderPage(currPage);
 
 for (let link = 0; link < links.length; link++) {
   links[link].addEventListener("click", linkFocusSelector);
