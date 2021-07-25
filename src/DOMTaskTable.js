@@ -72,6 +72,7 @@ class DOMTaskTable {
       modelOpener.src = settingsIcn;
       modelOpener.classList.add("table-row-img");
       modelOpener.setAttribute("data-modal-target", "#modal");
+      modelOpener.setAttribute("data-task-id", taskId);
       Prio.appendChild(modelOpener);
     }
 

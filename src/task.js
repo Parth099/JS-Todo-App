@@ -1,19 +1,10 @@
 class Task {
   static id = -1;
-  constructor(
-    title,
-    description,
-    dueDate,
-    priority,
-    notes,
-    isComplete,
-    project
-  ) {
+  constructor(title, description, dueDate, priority, isComplete, project) {
     this.title = title;
     this.description = description;
     this.dueDate = "none";
     this.priority = priority;
-    this.notes = notes;
     this.isComplete = isComplete;
     this.id = `T${++Task.id}`;
     this.project = project;
@@ -35,10 +26,6 @@ class Task {
 
   get priority() {
     return this._priority;
-  }
-
-  get notes() {
-    return this._notes;
   }
 
   get isComplete() {
@@ -63,10 +50,6 @@ class Task {
 
   set priority(p) {
     this._priority = p;
-  }
-
-  set notes(n) {
-    this._notes = n;
   }
 
   set isComplete(c) {
