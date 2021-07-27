@@ -1,16 +1,23 @@
 import DOMTaskTable from "./DOMTaskTable.js";
-import { TaskTrackerMain, links } from "./index.js";
+import { TaskTrackerMain, links, isBlank } from "./index.js";
 import attachModalLisnters from "./modal.js";
 let attachPoint = () => document.getElementById("content");
 
+String.prototype._capitalize = function () {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
 export function renderPage(pageTitle) {
+  if (typeof pageTitle === "undefined") {
+    pageTitle = TaskTrackerMain.currFocus;
+  }
   clearPage();
   let AP = attachPoint();
 
   let h1, table;
   h1 = document.createElement("h1");
   h1.classList.toggle("page-title");
-  h1.textContent = pageTitle ?? "Home";
+  h1.textContent = pageTitle._capitalize() ?? "Home";
   AP.appendChild(h1);
 
   const counter = TaskTrackerMain.projectCounter();
@@ -42,14 +49,8 @@ function clearPage() {
   document.body.appendChild(content);
 }
 
-function isBlank(str) {
-  return !str || /^\s*$/.test(str);
-}
-
 // underscore to make sure updates to js wont break code
-String.prototype._capitalize = function () {
-  return this.charAt(0).toUpperCase() + this.slice(1);
-};
+
 function projectLinkListener(e) {
   const focus = e.target.textContent;
   TaskTrackerMain.currFocus = focus;

@@ -17,6 +17,7 @@ attachNav("img.header-img[data-nav-icon]"); //nav gains hide and show func
 export const links = document.querySelectorAll(
   "#sideMenu > ul.menu-main > li > a.link"
 );
+
 let currPage = "Home";
 renderPage(currPage);
 
@@ -41,6 +42,9 @@ function linkFocusSelector(e) {
   renderPage(currPage);
 }
 
+export function isBlank(str) {
+  return !str || /^\s*$/.test(str);
+}
 //modal reqs
 
 //modals

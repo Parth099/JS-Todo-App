@@ -1,5 +1,5 @@
 import Task from "./task.js";
-
+import { isBlank } from "./index.js";
 class TaskTracker {
   constructor() {
     this.focus = "home";
@@ -16,7 +16,9 @@ class TaskTracker {
       new Task("Buy Zone 3 Pass", "8", "none", "High", false, "college"),
       new Task("Pick Classes", "8", "none", "High", false, "college"),
     ];
+    this.projectsSet = new Set();
   }
+
   get currFocus() {
     return this.focus;
   }
@@ -31,7 +33,9 @@ class TaskTracker {
     if (this.currFocus == "home") {
       return this.tasks;
     }
-    return this.tasks.filter((task) => task.project === this.currFocus);
+    return this.tasks.filter(
+      (task) => task.project === this.currFocus && task.title
+    );
   }
   getTaskById(id) {
     return this.tasks.find((task) => task.id === id);
@@ -46,12 +50,47 @@ class TaskTracker {
       if (typeof collections[task.project] === "undefined") {
         collections[task.project] = 0;
       }
-      collections[task.project]++;
+      if (task.title) {
+        collections[task.project]++;
+      }
+      this.projectsSet.add(task.project);
     });
     return collections;
   }
   addProject(p) {
     this.tasks.push(new Task("", "", "", "", "", p.trim())); //empty task object for local strorage parser
+  }
+  getProjects() {
+    return Array.from(this.projectsSet);
+  }
+  updateTask(id, mTitle, mDescrip, mDueDate, mPrio, mProject) {
+    const taskObj = this.getTaskById(id);
+    if (taskObj == null) {
+      return;
+    }
+    if (isBlank(mTitle) || isBlank(mPrio)) {
+      return 0;
+    }
+    taskObj.title = mTitle;
+    taskObj.priority = mPrio;
+    taskObj.project = mProject;
+    taskObj.description = mDescrip;
+    return 1;
+  }
+  addNewTask(nTitle, nDescrip, nDueDate, nPrio, nProject) {
+    if (isBlank(nTitle) || isBlank(nPrio)) {
+      return 0;
+    }
+    const newTask = new Task(
+      nTitle,
+      nDescrip,
+      nDueDate,
+      nPrio,
+      false,
+      nProject
+    );
+    this.tasks.push(newTask);
+    return 1;
   }
 }
 
