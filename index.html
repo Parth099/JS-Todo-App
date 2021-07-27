@@ -9,6 +9,20 @@
   <body>
     <header class="head-cont">
       <img src="./img/nav-icon.png" class="header-img" data-nav-icon />
+      <div>
+        <span class="add-task-cont">
+          <p class="add-task-text">Add Task</p>
+          <div class="Bkgrndhighlight">
+            <img
+              src="./img/add.png"
+              class="add-task-img"
+              data-modal-target="#modal"
+              data-add-btn="true"
+              data-task-id="add"
+            />
+          </div>
+        </span>
+      </div>
     </header>
     <div id="sideMenu" class="sideMenu">
       <ul class="menu-main">
@@ -22,6 +36,7 @@
     </div>
 
     <div id="content" class="content"></div>
+    <input style="margin-left: 450px" id="dateobj" type="date" />
     <div id="modal" class="modal">
       <div class="modal-header">
         <div class="title">Edit Task: <span id="task-title"></span></div>
@@ -74,7 +89,7 @@
       </div>
       <div class="buttons-flex">
         <button data-close-button="">Cancel</button>
-        <button id="model-save">Save</button>
+        <button id="modal-save">Save</button>
       </div>
     </div>
     <div class="overlay"></div>
