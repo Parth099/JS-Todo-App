@@ -4,6 +4,12 @@
 :root {
   --link-active: #4c8bf5;
   --table-row-padding: 3px;
+
+  --addpreclr: #19b96f;
+  --cancelpreclr: rgb(253, 122, 99);
+
+  --addclr: #008f4c;
+  --cancelclr: tomato;
 }
 body {
   font-family: "Montserrat", sans-serif;
@@ -229,6 +235,12 @@ body {
 .project-page-link-text {
   display: inline;
 }
+.project-page-delbtn {
+  font-size: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--link-active);
+}
 
 .project-nav-ext {
   margin: 0;
@@ -334,4 +346,83 @@ select {
 }
 .Bkgrndhighlight:hover {
   background: rgba(255, 255, 255, 0.151);
+}
+
+.add-project-cont {
+  width: 200px;
+  margin-left: auto;
+  display: none;
+  transition: 0.5s ease-in-out;
+}
+.add-project-cont.active {
+  display: block;
+}
+.add-project-text {
+  color: white;
+  font-weight: bold;
+}
+#add-project {
+  width: 140px;
+  background: white;
+  outline: none;
+  margin-bottom: 0px;
+}
+#add {
+  color: var(--addpreclr);
+  border-color: var(--addpreclr);
+}
+#cancel {
+  color: var(--cancelpreclr);
+  border-color: var(--cancelpreclr);
+}
+
+#add:hover {
+  color: var(--addclr);
+  border-color: var(--addclr);
+}
+#cancel:hover {
+  color: var(--cancelclr);
+  border-color: var(--cancelclr);
+}
+.add-project-btn-cont {
+  width: 140px;
+  display: flex;
+  gap: 5px;
+}
+.add-project-btn {
+  margin: 0px;
+  margin-top: 5px;
+  align-self: center;
+  padding: 0%;
+  color: white;
+  background: none;
+  border: none;
+  width: 50%;
+
+  padding: 0;
+  font-size: 16px;
+  font-weight: bolder;
+  padding: 2px;
+
+  border: 1px white solid;
+  border-radius: 3px;
+}
+
+.add-project-preimage {
+  display: none;
+  width: 200px;
+  margin-left: auto;
+}
+.add-project-preimage.active {
+  display: block;
+}
+.add-project-prebutton {
+  color: white;
+  background: #78a8fa;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: bolder;
+}
+.add-project-prebutton:hover {
+  background: #001538;
 }

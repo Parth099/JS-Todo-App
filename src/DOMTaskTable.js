@@ -17,6 +17,9 @@ class DOMTaskTable {
     //console.log(this.tasks);
   }
   createTableRow(titleText, dueDateText, prioText, isCompleted, taskId) {
+    if (typeof titleText === "undefined") {
+      return;
+    }
     /*
         <div class="table-row title">
           <p>Title</p>
@@ -106,7 +109,9 @@ class DOMTaskTable {
         obj.isComplete,
         obj.id
       );
-      container.appendChild(rowData);
+      if (typeof rowData != "undefined") {
+        container.appendChild(rowData);
+      }
     }
     return container;
   }

@@ -58,7 +58,16 @@ class TaskTracker {
     return collections;
   }
   addProject(p) {
-    this.tasks.push(new Task("", "", "", "", "", p.trim())); //empty task object for local strorage parser
+    p = p.toLowerCase().trim();
+    if (p == "home") {
+      return false;
+    }
+    if (this.projectsSet.has(p)) {
+      return false;
+    }
+    this.projectsSet.add(p);
+    this.tasks.push(new Task(undefined, "a", "a", "a", false, p)); //empty task object for local strorage parser
+    return true;
   }
   getProjects() {
     return Array.from(this.projectsSet);

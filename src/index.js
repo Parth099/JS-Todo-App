@@ -47,4 +47,51 @@ export function isBlank(str) {
 }
 //modal reqs
 
-//modals
+//addProject Listeners
+function toggleActive(e) {
+  const currContainer = e.target.closest("[data-button-target]");
+  if (typeof currContainer === "undefined") {
+    return;
+  }
+  const targetSelector = currContainer.dataset.buttonTarget;
+  const targetToShow = document.querySelector(targetSelector);
+
+  currContainer.classList.toggle("active"); //hides curr target
+  targetToShow.classList.toggle("active"); //shows next target
+}
+
+function toggleActiveForMenu(e) {
+  const inputEle = document.querySelector("#add-project");
+  const input = inputEle.value;
+
+  if (e.target.getAttribute("id") == "add") {
+    if (isBlank(input)) {
+      return;
+    }
+    const additionSuccess = TaskTrackerMain.addProject(input);
+    if (additionSuccess == false) {
+      return;
+    } else if (additionSuccess == true) {
+      renderPage();
+    }
+  }
+  inputEle.value = ""; //clear text for next use
+
+  const currContainer = e.target.closest("[data-button-target]");
+  if (typeof currContainer === "undefined") {
+    return;
+  }
+  const targetSelector = currContainer.dataset.buttonTarget;
+  const targetToShow = document.querySelector(targetSelector);
+
+  currContainer.classList.toggle("active"); //hides curr target
+  targetToShow.classList.toggle("active"); //shows next target
+}
+
+const addprojectPreBtn = document.querySelector("#add-project-prebtn");
+addprojectPreBtn.addEventListener("click", toggleActive);
+
+const addProjectBtns = document.querySelectorAll(".add-project-btn");
+for (let btn = 0; btn < addProjectBtns.length; btn++) {
+  addProjectBtns[btn].addEventListener("click", toggleActiveForMenu);
+}

@@ -22,7 +22,8 @@ export function renderPage(pageTitle) {
 
   const counter = TaskTrackerMain.projectCounter();
   attachProjectLinks(counter);
-  if (pageTitle == "Projects") {
+  console.log(pageTitle);
+  if (pageTitle.toLowerCase() == "projects") {
     renderProjectsInfo(counter);
     return;
   }
@@ -79,7 +80,6 @@ function projectExtListener(e) {
     extLinks[i].classList.remove("active");
   }
   */
-  console.log(e);
   renderPage(e.target.textContent);
 }
 
@@ -121,14 +121,16 @@ function renderProjectsInfo(counter) {
   let projectLink;
   let projectLinkText;
   let keyText;
+  let delBtn;
+  let linkdiv;
   const keys = Object.keys(counter);
   keys.forEach((key) => {
+    linkdiv = document.createElement("div");
     projectLinkCont = document.createElement("div");
     projectLinkCont.classList.add("project-page-link-cont");
 
     projectLink = document.createElement("a");
     projectLink.classList.add("project-page-link");
-    projectLinkCont.appendChild(projectLink);
 
     projectLink.addEventListener("click", projectLinkListener);
 
@@ -137,13 +139,30 @@ function renderProjectsInfo(counter) {
 
     projectLinkText = document.createElement("p");
     projectLinkText.textContent = `${counter[key]}  ${
-      counter[key] > 1 ? "Tasks" : "Task*"
+      counter[key] === 1 ? "Task" : "Tasks"
     }`;
     projectLinkCont.appendChild(projectLinkText);
     projectLinkText.classList.add("project-page-link-text");
+
+    delBtn = document.createElement("button");
+    delBtn.classList.add("project-page-delbtn");
+    delBtn.textContent = "×";
+    delBtn.addEventListener(
+      "click",
+      delProject.bind({ project: keyText.toLowerCase() })
+    );
+
+    linkdiv.appendChild(delBtn);
+    linkdiv.appendChild(projectLink);
+
+    projectLinkCont.prepend(linkdiv);
     AP.appendChild(projectLinkCont);
   });
   attachProjectLinks(counter);
+}
+
+function delProject(e) {
+  console.log(this.project);
 }
 
 //modal

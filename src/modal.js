@@ -28,8 +28,10 @@ export default function attachModalLisnters() {
       const modal = document.querySelector(button.dataset.modalTarget);
       submitInfo.modal = modal;
       targetId = e.target.getAttribute("data-task-id"); //gets id of selected trigger
+
       const taskObj = TaskTrackerMain.getTaskById(targetId);
       loadProjects(TaskTrackerMain.getProjects());
+
       if (button.dataset.addBtn == "true") {
         mTitle.value = "";
         mPrio.value = "";
