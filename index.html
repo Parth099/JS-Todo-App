@@ -29,14 +29,30 @@
         <li><a class="link active" href="#">Home</a></li>
         <li><a class="link" a href="#">Today</a></li>
         <li class="project-link">
-          <a class="link" href="#">Projects<a id="add-project-btn">&#43;</a></a>
+          <a class="link" href="#">Projects</a>
         </li>
       </ul>
+      <div class="add-project-cont" data-button-target=".add-project-preimage">
+        <p class="add-project-text">Add a Project</p>
+        <input id="add-project" type="text" />
+        <div class="add-project-btn-cont">
+          <button id="add" class="add-project-btn">Add</button>
+          <button id="cancel" class="add-project-btn">Cancel</button>
+        </div>
+      </div>
+      <div
+        class="add-project-preimage active"
+        data-button-target=".add-project-cont"
+      >
+        <button class="add-project-prebutton" id="add-project-prebtn">
+          &plus; Add Project
+        </button>
+      </div>
       <ul class="project-nav-ext"></ul>
     </div>
 
     <div id="content" class="content"></div>
-    <input style="margin-left: 450px" id="dateobj" type="date" />
+    <!-- <input style="margin-left: 450px" id="dateobj" type="date" /> -->
     <div id="modal" class="modal">
       <div class="modal-header">
         <div class="title">Edit Task: <span id="task-title"></span></div>
