@@ -1,22 +1,16 @@
 import Task from "./task.js";
 import { isBlank } from "./index.js";
+import localStorageHandler from "./localStorageHandler.js";
+
 class TaskTracker {
   constructor() {
     this.focus = "home";
-    this.tasks = [
-      new Task("Learn HashMaps", "1", "none", "High", true, ""),
-      new Task("Learn Linked Lists", "2", "none", "Medium", true, ""),
-      new Task("Learn Arrays", "3", "none", "Low", true, ""),
-      new Task("Learn Queues", "4", "none", "Low", true, ""),
-      new Task("Learn Stacks", "5", "none", "Medium", false, ""),
-      new Task("Learn R/B Trees", "6", "none", "Low", false, ""),
-      new Task("Learn Graphs", "7", "none", "Low", false, "today"),
-      new Task("Learn Tuples", "8", "none", "Medium", true, "today"),
-      new Task("Make Trays", "8", "none", "Medium", false, "subway"),
-      new Task("Buy Zone 3 Pass", "8", "none", "High", false, "college"),
-      new Task("Pick Classes", "8", "none", "High", false, "college"),
-    ];
+    this.tasks = [];
     this.projectsSet = new Set();
+    this.projectsSet.add("");
+    this.projectsSet.add("home");
+    this.projectsSet.add("today");
+    this.localStorageHandler = new localStorageHandler(this.tasks);
   }
 
   get currFocus() {
@@ -43,6 +37,7 @@ class TaskTracker {
   completeXOR(id) {
     const selectedTask = this.getTaskById(id);
     selectedTask.isComplete ^= 1; //xor
+    this.localStorageHandler.saveEditedTask(id, selectedTask);
   }
   projectCounter() {
     const collections = {};
@@ -84,6 +79,7 @@ class TaskTracker {
     taskObj.priority = mPrio;
     taskObj.project = mProject;
     taskObj.description = mDescrip;
+    this.localStorageHandler.saveEditedTask(id, taskObj);
     return 1;
   }
   addNewTask(nTitle, nDescrip, nDueDate, nPrio, nProject) {
@@ -99,6 +95,7 @@ class TaskTracker {
       nProject
     );
     this.tasks.push(newTask);
+    this.localStorageHandler.addNewTask(newTask);
     return 1;
   }
 }

@@ -8,6 +8,7 @@ String.prototype._capitalize = function () {
 };
 
 export function renderPage(pageTitle) {
+  console.log("gtt", TaskTrackerMain.getTasks());
   if (typeof pageTitle === "undefined") {
     pageTitle = TaskTrackerMain.currFocus;
   }
@@ -22,7 +23,6 @@ export function renderPage(pageTitle) {
 
   const counter = TaskTrackerMain.projectCounter();
   attachProjectLinks(counter);
-  console.log(pageTitle);
   if (pageTitle.toLowerCase() == "projects") {
     renderProjectsInfo(counter);
     return;
@@ -84,6 +84,7 @@ function projectExtListener(e) {
 }
 
 function attachProjectLinks(counter) {
+  console.log("counter", counter);
   let li, a;
   let _linksAP = function () {
     let pointer = document.querySelector(".project-nav-ext");
@@ -121,11 +122,8 @@ function renderProjectsInfo(counter) {
   let projectLink;
   let projectLinkText;
   let keyText;
-  let delBtn;
-  let linkdiv;
   const keys = Object.keys(counter);
   keys.forEach((key) => {
-    linkdiv = document.createElement("div");
     projectLinkCont = document.createElement("div");
     projectLinkCont.classList.add("project-page-link-cont");
 
@@ -144,25 +142,11 @@ function renderProjectsInfo(counter) {
     projectLinkCont.appendChild(projectLinkText);
     projectLinkText.classList.add("project-page-link-text");
 
-    delBtn = document.createElement("button");
-    delBtn.classList.add("project-page-delbtn");
-    delBtn.textContent = "×";
-    delBtn.addEventListener(
-      "click",
-      delProject.bind({ project: keyText.toLowerCase() })
-    );
-
-    linkdiv.appendChild(delBtn);
-    linkdiv.appendChild(projectLink);
-
-    projectLinkCont.prepend(linkdiv);
+    projectLinkCont.appendChild(projectLink);
+    projectLinkCont.appendChild(projectLinkText);
     AP.appendChild(projectLinkCont);
   });
   attachProjectLinks(counter);
-}
-
-function delProject(e) {
-  console.log(this.project);
 }
 
 //modal
