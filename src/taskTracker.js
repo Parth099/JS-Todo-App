@@ -5,12 +5,14 @@ import localStorageHandler from "./localStorageHandler.js";
 class TaskTracker {
   constructor() {
     this.focus = "home";
-    this.tasks = [];
     this.projectsSet = new Set();
     this.projectsSet.add("");
     this.projectsSet.add("home");
     this.projectsSet.add("today");
-    this.localStorageHandler = new localStorageHandler(this.tasks);
+    this.localStorageHandler = new localStorageHandler([]);
+    this.tasks = [...this.localStorageHandler.savedTaskArr];
+    console.log("MAIN", this.tasks);
+    console.log("Task-test", this.tasks[0].title); //fix THIS!!! IMPORT TASK FROM LCH
   }
 
   get currFocus() {
