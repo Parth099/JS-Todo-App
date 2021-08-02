@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 class Task {
   static id = -1;
   constructor(title, description, dueDate, priority, isComplete, project) {
@@ -6,7 +8,7 @@ class Task {
     this.dueDate = "none";
     this.priority = priority;
     this.isComplete = isComplete;
-    this.id = `T${++Task.id}`;
+    this.id = `${uuidv4()}`;
     this.project = project;
   }
 

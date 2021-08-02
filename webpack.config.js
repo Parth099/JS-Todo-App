@@ -6,6 +6,7 @@ module.exports = {
     "./src/pageLoader.js",
     "./src/DOMTaskTable.js",
     "./src/taskTracker.js",
+    "./src/localStorageHandler.js",
   ],
   output: {
     filename: "main.js",

@@ -1,6 +1,8 @@
+import Task from "./task.js";
+
 export default class localStorageHandler {
   constructor(arr) {
-    this._internalCount = 0;
+    this._internalCount = localStorage.getItem("MAX") ?? 0;
     this.TaskHash = {};
 
     this.isInit = 0;
@@ -12,12 +14,13 @@ export default class localStorageHandler {
     if (this.isInit) {
       return;
     }
+    this.isInit ^= 1;
 
     const existingData = this.readFromExistingStorage();
     if (existingData) {
       return;
     }
-    this.isInit ^= 1;
+
     let taskToJson;
     for (let task of this.taskArr) {
       this.TaskHash[task.id] = this._internalCount;
@@ -25,15 +28,17 @@ export default class localStorageHandler {
       this.saveItemToStorage(this._internalCount, taskToJson);
       this._internalCount++;
     }
+    this._internalCount--;
   }
   saveEditedTask(id, newObjData) {
     const localId = this.TaskHash[id];
     this.saveItemToStorage(localId, JSON.stringify(newObjData));
   }
   addNewTask(taskObj) {
+    console.log(taskObj);
+    this._internalCount++;
     this.saveItemToStorage(this._internalCount, JSON.stringify(taskObj));
     this.TaskHash[taskObj.id] = this._internalCount;
-    this._internalCount++;
   }
   saveItemToStorage(key, value) {
     localStorage.setItem(key, value);
@@ -42,17 +47,24 @@ export default class localStorageHandler {
   readFromExistingStorage() {
     if (localStorage.length == 0) return 0;
     let idx = 0;
-    let currObj, item;
+    let JSON_OBJ, item;
     let limit = parseInt(localStorage.getItem("MAX"));
     while (idx <= limit) {
-      item = localStorage.getItem(idx++);
-      if (item !== "undefined") {
-        currObj = JSON.parse(item);
-        this.savedTaskArr.push(currObj);
-      }
-    }
+      item = localStorage.getItem(idx);
+      if (item) {
+        JSON_OBJ = JSON.parse(item);
+        //currObj = Object.assign(Object.create(Task), JSON_OBJ);
+        Object.setPrototypeOf(JSON_OBJ, Task.prototype); //gives each object the set/get props required
+        this.savedTaskArr.push(JSON_OBJ);
 
-    console.log("LC", this.savedTaskArr);
+        //task hashing
+        this.TaskHash[JSON_OBJ.id] = idx;
+      }
+      idx++;
+    }
     return this.savedTaskArr;
+  }
+  getLastTaskid() {
+    return parseInt(localStorage.getItem("MAX"));
   }
 }

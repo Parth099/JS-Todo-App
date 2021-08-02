@@ -14,8 +14,6 @@ function checkboxListener(event) {
 class DOMTaskTable {
   constructor(internalTaskArray) {
     this.tasks = internalTaskArray ?? [];
-    console.log("DTT", this.tasks);
-    //console.log(this.tasks);
   }
   createTableRow(titleText, dueDateText, prioText, isCompleted, taskId) {
     if (typeof titleText === "undefined") {

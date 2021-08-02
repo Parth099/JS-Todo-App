@@ -426,3 +426,8 @@ select {
 .add-project-prebutton:hover {
   background: #001538;
 }
+#add-project-text-info {
+  font-size: 14px;
+  font-style: italic;
+  color: white;
+}

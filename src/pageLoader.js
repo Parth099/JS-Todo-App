@@ -8,7 +8,6 @@ String.prototype._capitalize = function () {
 };
 
 export function renderPage(pageTitle) {
-  console.log("gtt", TaskTrackerMain.getTasks());
   if (typeof pageTitle === "undefined") {
     pageTitle = TaskTrackerMain.currFocus;
   }
@@ -84,7 +83,6 @@ function projectExtListener(e) {
 }
 
 function attachProjectLinks(counter) {
-  console.log("counter", counter);
   let li, a;
   let _linksAP = function () {
     let pointer = document.querySelector(".project-nav-ext");
@@ -107,7 +105,7 @@ function attachProjectLinks(counter) {
     a = document.createElement("a");
     a.setAttribute("href", "#");
     li.appendChild(a);
-    a.textContent = keyText._capitalize();
+    a.textContent = keyText; //._capitalize();
     if (keyText === TaskTrackerMain.currFocus) {
       a.classList.add("active");
     }
