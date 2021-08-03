@@ -47,7 +47,6 @@ class Task {
   }
 
   set dueDate(dd) {
-    console.log(dd);
     if (dd && dd != "none") {
       const date = new Date(dd);
       this._dueDate = `${date.toISOString().slice(0, 10)}`;

@@ -38,7 +38,6 @@ export default class localStorageHandler {
     this.saveItemToStorage(localId, JSON.stringify(newObjData));
   }
   addNewTask(taskObj) {
-    console.log(taskObj);
     this._internalCount++;
     this.saveItemToStorage(this._internalCount, JSON.stringify(taskObj));
     this.TaskHash[taskObj.id] = this._internalCount;

@@ -15,6 +15,7 @@ const mProject = document.querySelector("#task-project-modal");
 const mDescrip = document.querySelector("#task-descrip-modal");
 const submitBTN = document.getElementById("modal-save");
 const deleteBTN = document.querySelector(".del-img-cont");
+const modalMode = document.querySelector("#modalmode");
 
 let submitInfo = { isUpdate: false, isAddition: false, modal: null };
 let funcPointer = submitHandler.bind(submitInfo);
@@ -41,6 +42,7 @@ export default function attachModalLisnters() {
         mDueDate.valueAsDate = null;
         submitInfo.isAddition = true;
         deleteBTN.classList.remove("active");
+        modalMode.textContent = "Add";
       } else {
         mTitle.value = taskObj.title;
         mPrio.value = taskObj.priority;
@@ -49,6 +51,7 @@ export default function attachModalLisnters() {
         mDueDate.value = taskObj.dueDate;
         submitInfo.isUpdate = true;
         deleteBTN.classList.add("active");
+        modalMode.textContent = "Edit";
       }
       modal.setAttribute("data-focus", targetId);
       openModal(modal, targetId);
