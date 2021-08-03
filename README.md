@@ -2,7 +2,7 @@
 This Todo App was built using Webpack technologies using:
 * Html/CSS
 * JavaScript
-#External Libraries
+# External Libraries
 * Uuid - https://www.npmjs.com/package/uuid [Public]
 
 
