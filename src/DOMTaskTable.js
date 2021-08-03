@@ -69,6 +69,10 @@ class DOMTaskTable {
     DueDate.textContent = dueDateText;
     Prio.textContent = prioText;
 
+    if (new Date(dueDateText).getTime() < new Date().getTime()) {
+      DueDate.classList.add("overdue");
+    }
+
     if (taskId != "table-head") {
       modelOpener = new Image();
       modelOpener.src = settingsIcn;

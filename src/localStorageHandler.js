@@ -2,6 +2,9 @@ import Task from "./task.js";
 
 export default class localStorageHandler {
   constructor(arr) {
+    if (localStorage.length < 2) {
+      localStorage.clear();
+    }
     this._internalCount = localStorage.getItem("MAX") ?? 0;
     this.TaskHash = {};
 
@@ -64,7 +67,12 @@ export default class localStorageHandler {
     }
     return this.savedTaskArr;
   }
-  getLastTaskid() {
-    return parseInt(localStorage.getItem("MAX"));
+  deleteTask(uuid) {
+    const key = this.TaskHash[uuid];
+    if (typeof key === "undefined") {
+      return;
+    }
+    localStorage.removeItem(key);
+    delete this.TaskHash[uuid];
   }
 }

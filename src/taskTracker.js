@@ -99,8 +99,6 @@ class TaskTracker {
     return true;
   }
   getProjects() {
-    console.log("DTT");
-    console.log(this.projectsSet);
     return Array.from(this.projectsSet);
   }
   updateTask(id, mTitle, mDescrip, mDueDate, mPrio, mProject) {
@@ -115,6 +113,7 @@ class TaskTracker {
     taskObj.priority = mPrio;
     taskObj.project = mProject;
     taskObj.description = mDescrip;
+    taskObj.dueDate = mDueDate;
     this.localStorageHandler.saveEditedTask(id, taskObj);
     return 1;
   }
@@ -133,6 +132,14 @@ class TaskTracker {
     this.tasks.push(newTask);
     this.localStorageHandler.addNewTask(newTask);
     return 1;
+  }
+  deleteTask(uuid) {
+    const idx = this.tasks.findIndex((ele) => ele.id == uuid);
+    if (typeof idx === "undefined") {
+      return;
+    }
+    this.tasks.splice(idx, 1);
+    this.localStorageHandler.deleteTask(uuid);
   }
 }
 

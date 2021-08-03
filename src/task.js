@@ -5,7 +5,7 @@ class Task {
   constructor(title, description, dueDate, priority, isComplete, project) {
     this.title = title;
     this.description = description;
-    this.dueDate = "none";
+    this.dueDate = dueDate;
     this.priority = priority;
     this.isComplete = isComplete;
     this.id = `${uuidv4()}`;
@@ -47,7 +47,13 @@ class Task {
   }
 
   set dueDate(dd) {
-    this._dueDate = dd;
+    console.log(dd);
+    if (dd && dd != "none") {
+      const date = new Date(dd);
+      this._dueDate = `${date.toISOString().slice(0, 10)}`;
+    } else {
+      this._dueDate = "none";
+    }
   }
 
   set priority(p) {

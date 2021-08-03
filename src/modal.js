@@ -14,6 +14,7 @@ const mDueDate = document.querySelector("#task-dueDate-modal");
 const mProject = document.querySelector("#task-project-modal");
 const mDescrip = document.querySelector("#task-descrip-modal");
 const submitBTN = document.getElementById("modal-save");
+const deleteBTN = document.querySelector(".del-img-cont");
 
 let submitInfo = { isUpdate: false, isAddition: false, modal: null };
 let funcPointer = submitHandler.bind(submitInfo);
@@ -37,14 +38,19 @@ export default function attachModalLisnters() {
         mPrio.value = "";
         mProject.value = "";
         mDescrip.value = "";
+        mDueDate.valueAsDate = null;
         submitInfo.isAddition = true;
+        deleteBTN.classList.remove("active");
       } else {
         mTitle.value = taskObj.title;
         mPrio.value = taskObj.priority;
         mProject.value = taskObj.project;
         mDescrip.value = taskObj.description;
+        mDueDate.value = taskObj.dueDate;
         submitInfo.isUpdate = true;
+        deleteBTN.classList.add("active");
       }
+      modal.setAttribute("data-focus", targetId);
       openModal(modal, targetId);
     });
   });
@@ -95,7 +101,7 @@ function saveUpdate(modal) {
     targetId,
     mTitle.value,
     mDescrip.value,
-    "",
+    mDueDate.value,
     mPrio.value,
     mProject.value
   );
@@ -111,7 +117,7 @@ function addNewTask(modal) {
   let additionSuccess = TaskTrackerMain.addNewTask(
     mTitle.value,
     mDescrip.value,
-    "",
+    mDueDate.value,
     mPrio.value,
     mProject.value
   );
@@ -130,3 +136,14 @@ function submitHandler(e) {
     addNewTask(this.modal);
   }
 }
+
+deleteBTN.addEventListener("click", function (e) {
+  const uuidv4 = e.target.closest("[data-focus]").dataset.focus;
+  if (uuidv4.length == 36) {
+    //guard
+    TaskTrackerMain.deleteTask(uuidv4);
+  }
+  const modal = e.target.closest("#modal");
+  closeModal(modal);
+  renderPage();
+});

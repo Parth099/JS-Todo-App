@@ -103,6 +103,10 @@ body {
 }
 .dueDate {
   width: 150px;
+  font-weight: 500;
+}
+.dueDate.overdue {
+  color: red;
 }
 .priority {
   display: flex;
@@ -430,4 +434,31 @@ select {
   font-size: 14px;
   font-style: italic;
   color: white;
+}
+
+.del-img-cont {
+  position: absolute;
+  padding: 10px;
+  bottom: 0;
+  left: 0;
+  display: none;
+}
+.del-img-cont.active {
+  display: block;
+}
+
+.del-task-img {
+  --sz: 35px;
+  width: var(--sz);
+  height: var(--sz);
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #000;
+  color: white;
+  text-align: center;
 }
