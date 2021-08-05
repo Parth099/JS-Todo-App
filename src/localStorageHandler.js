@@ -2,7 +2,13 @@ import Task from "./task.js";
 
 export default class localStorageHandler {
   constructor(arr) {
-    if (localStorage.length < 2) {
+    //check for LOCALSTR collisions
+    const ghFocus = localStorage.getItem("project-focus-GHPAGES");
+    if (typeof ghFocus === "undefined") {
+      localStorage.setItem("project-focus-GHPAGES", "todo-app");
+      localStorage.clear();
+    }
+    if (localStorage.length < 3) {
       localStorage.clear();
     }
     this._internalCount = localStorage.getItem("MAX") ?? 0;

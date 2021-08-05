@@ -1,13 +1,12 @@
-import { TaskTrackerMain } from "./index.js";
-import { renderPage } from "./pageLoader.js";
+import { renderPage } from "./pageLoader";
 
-//model open/close
+// model open/close
 const openModalButtons = () => document.querySelectorAll("[data-modal-target]");
 const closeModalButtons = () =>
   document.querySelectorAll("[data-close-button]");
 const overlay = document.querySelector(".overlay");
 
-//model read/write to HTML
+// model read/write to HTML
 const mTitle = document.querySelector("#task-title-modal");
 const mPrio = document.querySelector("#task-prio-modal");
 const mDueDate = document.querySelector("#task-dueDate-modal");
@@ -17,11 +16,17 @@ const submitBTN = document.getElementById("modal-save");
 const deleteBTN = document.querySelector(".del-img-cont");
 const modalMode = document.querySelector("#modalmode");
 
-let submitInfo = { isUpdate: false, isAddition: false, modal: null };
-let funcPointer = submitHandler.bind(submitInfo);
+const submitInfo = {
+  isUpdate: false,
+  isAddition: false,
+  modal: null,
+  TaskTracker: null,
+};
+const funcPointer = submitHandler.bind(submitInfo);
 let targetId;
 
-export default function attachModalLisnters() {
+function attachModalLisnters(TaskTrackerMain) {
+  submitBTN.TaskTracker = TaskTrackerMain;
   submitBTN.removeEventListener("click", funcPointer);
   submitBTN.addEventListener("click", funcPointer);
 
@@ -29,7 +34,7 @@ export default function attachModalLisnters() {
     button.addEventListener("click", (e) => {
       const modal = document.querySelector(button.dataset.modalTarget);
       submitInfo.modal = modal;
-      targetId = e.target.getAttribute("data-task-id"); //gets id of selected trigger
+      targetId = e.target.getAttribute("data-task-id"); // gets id of selected trigger
 
       const taskObj = TaskTrackerMain.getTaskById(targetId);
       loadProjects(TaskTrackerMain.getProjects());
@@ -88,10 +93,10 @@ overlay.addEventListener("click", () => {
 });
 
 function loadProjects(taskProjects) {
-  //arr
-  mProject.querySelectorAll("*").forEach((child) => child.remove()); //removes all list options before appending new ones
+  // arr
+  mProject.querySelectorAll("*").forEach((child) => child.remove()); // removes all list options before appending new ones
   let option;
-  for (let project of taskProjects) {
+  for (const project of taskProjects) {
     option = document.createElement("option");
     option.value = project;
     option.textContent = project;
@@ -99,7 +104,7 @@ function loadProjects(taskProjects) {
   }
 }
 
-function saveUpdate(modal) {
+function saveUpdate(modal, TaskTrackerMain) {
   const updateSuccess = TaskTrackerMain.updateTask(
     targetId,
     mTitle.value,
@@ -113,11 +118,11 @@ function saveUpdate(modal) {
     closeModal(modal);
     renderPage();
   }
-  //sends update to "TaskManager" :)
+  // sends update to "TaskManager" :)
 }
 
-function addNewTask(modal) {
-  let additionSuccess = TaskTrackerMain.addNewTask(
+function addNewTask(modal, TaskTrackerMain) {
+  const additionSuccess = TaskTrackerMain.addNewTask(
     mTitle.value,
     mDescrip.value,
     mDueDate.value,
@@ -130,23 +135,30 @@ function addNewTask(modal) {
   }
 }
 
-function submitHandler(e) {
+function submitHandler() {
   // this.isAddition  this.isUpdate, while both are not needed using 2 vars can help me reduce errors
 
   if (this.isUpdate) {
-    saveUpdate(this.modal);
+    this.TaskTracker.saveUpdate(this.modal);
   } else {
-    addNewTask(this.modal);
+    this.TaskTracker.addNewTask(this.modal);
   }
 }
 
-deleteBTN.addEventListener("click", function (e) {
-  const uuidv4 = e.target.closest("[data-focus]").dataset.focus;
-  if (uuidv4.length == 36) {
-    //guard
-    TaskTrackerMain.deleteTask(uuidv4);
-  }
-  const modal = e.target.closest("#modal");
-  closeModal(modal);
-  renderPage();
-});
+function attachDeleteLisntener(TaskTrackerMain) {
+  deleteBTN.addEventListener("click", (e) => {
+    const uuidv4 = e.target.closest("[data-focus]").dataset.focus;
+    if (uuidv4.length == 36) {
+      // guard
+      TaskTrackerM.deleteTask(uuidv4);
+    }
+    const modal = e.target.closest("#modal");
+    closeModal(modal);
+    renderPage();
+  });
+}
+
+export default function attachModalListeners(TaskTrackerMain) {
+  attachModalLisnters(TaskTrackerMain);
+  attachDeleteLisntener(TaskTrackerMain);
+}

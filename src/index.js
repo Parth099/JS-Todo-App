@@ -3,7 +3,7 @@ import "./styles/styles.css";
 import "./styles/reset.css";
 
 //import compo
-import { attachNav } from "./nav.js";
+import { attachModalListeners } from "./nav.js";
 import { renderPage } from "./pageLoader.js";
 
 //task tracker
@@ -12,7 +12,7 @@ export const TaskTrackerMain = new TaskTracker();
 
 //import Task
 attachNav("img.header-img[data-nav-icon]"); //nav gains hide and show func
-//console.log(taskList)
+attachModalListeners(TaskTrackerMain); //gives the modal's buttons functionalty
 
 export const links = document.querySelectorAll(
   "#sideMenu > ul.menu-main > li > a.link"
