@@ -1,13 +1,24 @@
 import DOMTaskTable from "./DOMTaskTable.js";
-import { TaskTrackerMain, links, isBlank } from "./index.js";
-import attachModalLisnters from "./modal.js";
+import { attachModalLisntener } from "./modal.js";
+
+const links = document.querySelectorAll(
+  "#sideMenu > ul.menu-main > li > a.link"
+);
+
+export function isBlank(str) {
+  return !str || /^\s*$/.test(str);
+}
+
 let attachPoint = () => document.getElementById("content");
 
 String.prototype._capitalize = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
-export function renderPage(pageTitle) {
+//renderpage
+//projectLinkListener
+//attachProjectLinks
+export function renderPage(pageTitle, TaskTrackerMain) {
   if (typeof pageTitle === "undefined") {
     pageTitle = TaskTrackerMain.currFocus;
   }
@@ -20,10 +31,9 @@ export function renderPage(pageTitle) {
   h1.textContent = pageTitle._capitalize() ?? "Home";
   AP.appendChild(h1);
 
-  const counter = TaskTrackerMain.projectCounter();
-  attachProjectLinks(counter);
+  attachProjectLinks(TaskTrackerMain);
   if (pageTitle.toLowerCase() == "projects") {
-    renderProjectsInfo(counter);
+    renderProjectsInfo(TaskTrackerMain);
     return;
   }
   TaskTrackerMain.currFocus = pageTitle;
@@ -38,7 +48,8 @@ export function renderPage(pageTitle) {
   tableCont.appendChild(tableHead);
   tableCont.appendChild(tableData);
   AP.appendChild(tableCont);
-  attachModalLisnters();
+  console.log("ERR");
+  attachModalLisntener();
 }
 
 function clearPage() {
@@ -53,7 +64,7 @@ function clearPage() {
 
 function projectLinkListener(e) {
   const focus = e.target.textContent;
-  TaskTrackerMain.currFocus = focus;
+  this.TaskTrackerMain.currFocus = focus;
 
   if (focus == "Home" || focus == "Today") {
     for (let link = 0; link < links.length; link++) {
@@ -65,7 +76,7 @@ function projectLinkListener(e) {
     }
   }
 
-  renderPage(focus);
+  renderPage(focus, TaskTrackerMain);
 }
 function projectExtListener(e) {
   const preActive = document.querySelector("ul.menu-main li a.active");
@@ -79,10 +90,11 @@ function projectExtListener(e) {
     extLinks[i].classList.remove("active");
   }
   */
-  renderPage(e.target.textContent);
+  renderPage(e.target.textContent, this.TaskTrackerMain);
 }
 
-function attachProjectLinks(counter) {
+function attachProjectLinks(TaskTrackerMain) {
+  const counter = TaskTrackerMain.projectCounter();
   let li, a;
   let _linksAP = function () {
     let pointer = document.querySelector(".project-nav-ext");
@@ -109,12 +121,14 @@ function attachProjectLinks(counter) {
     if (keyText === TaskTrackerMain.currFocus) {
       a.classList.add("active");
     }
-    a.addEventListener("click", projectExtListener);
+    a.addEventListener("click", projectExtListener.bind({ TaskTrackerMain }));
     linksAP.appendChild(li);
   }
 }
 
-function renderProjectsInfo(counter) {
+function renderProjectsInfo(TaskTrackerMain) {
+  const counter = TaskTrackerMain.projectCounter();
+  console.log("hit", counter);
   const AP = attachPoint();
   let projectLinkCont;
   let projectLink;
@@ -128,7 +142,10 @@ function renderProjectsInfo(counter) {
     projectLink = document.createElement("a");
     projectLink.classList.add("project-page-link");
 
-    projectLink.addEventListener("click", projectLinkListener);
+    projectLink.addEventListener(
+      "click",
+      projectLinkListener.bind({ TaskTrackerMain })
+    );
 
     keyText = isBlank(key) ? "Home" : key;
     projectLink.textContent = `${keyText._capitalize()}`;

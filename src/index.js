@@ -3,23 +3,25 @@ import "./styles/styles.css";
 import "./styles/reset.css";
 
 //import compo
-import { attachModalListeners } from "./nav.js";
+import { attachNav } from "./nav.js";
 import { renderPage } from "./pageLoader.js";
 
 //task tracker
 import TaskTracker from "./taskTracker.js";
 export const TaskTrackerMain = new TaskTracker();
 
+//modal
+import { attachModalLisntener, attachDeleteLisntener } from "./modal.js";
 //import Task
 attachNav("img.header-img[data-nav-icon]"); //nav gains hide and show func
-attachModalListeners(TaskTrackerMain); //gives the modal's buttons functionalty
-
-export const links = document.querySelectorAll(
+attachModalLisntener(TaskTrackerMain); //gives the modal's buttons functionalty
+attachDeleteLisntener(TaskTrackerMain); //gives delete task func!
+const links = document.querySelectorAll(
   "#sideMenu > ul.menu-main > li > a.link"
 );
 
 let currPage = "Home";
-renderPage(currPage);
+renderPage(currPage, TaskTrackerMain);
 
 for (let link = 0; link < links.length; link++) {
   links[link].addEventListener("click", linkFocusSelector);
@@ -39,7 +41,7 @@ function linkFocusSelector(e) {
   currPage = e.target.textContent;
   TaskTrackerMain.currFocus = e.target.textContent;
   e.target.classList.toggle("active");
-  renderPage(currPage);
+  renderPage(currPage, TaskTrackerMain);
 }
 
 export function isBlank(str) {
@@ -72,7 +74,7 @@ function toggleActiveForMenu(e) {
     if (additionSuccess == false) {
       return;
     } else if (additionSuccess == true) {
-      renderPage();
+      renderPage(undefined, TaskTrackerMain);
     }
   }
   inputEle.value = ""; //clear text for next use

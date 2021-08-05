@@ -25,7 +25,7 @@ const submitInfo = {
 const funcPointer = submitHandler.bind(submitInfo);
 let targetId;
 
-function attachModalLisnters(TaskTrackerMain) {
+export function attachModalLisntener(TaskTrackerMain) {
   submitBTN.TaskTracker = TaskTrackerMain;
   submitBTN.removeEventListener("click", funcPointer);
   submitBTN.addEventListener("click", funcPointer);
@@ -113,10 +113,10 @@ function saveUpdate(modal, TaskTrackerMain) {
     mPrio.value,
     mProject.value
   );
-  renderPage();
+  renderPage(undefined, TaskTrackerMain);
   if (updateSuccess) {
     closeModal(modal);
-    renderPage();
+    renderPage(undefined, TaskTrackerMain);
   }
   // sends update to "TaskManager" :)
 }
@@ -131,7 +131,7 @@ function addNewTask(modal, TaskTrackerMain) {
   );
   if (additionSuccess) {
     closeModal(modal);
-    renderPage();
+    renderPage(undefined, TaskTrackerMain);
   }
 }
 
@@ -145,7 +145,7 @@ function submitHandler() {
   }
 }
 
-function attachDeleteLisntener(TaskTrackerMain) {
+export function attachDeleteLisntener(TaskTrackerMain) {
   deleteBTN.addEventListener("click", (e) => {
     const uuidv4 = e.target.closest("[data-focus]").dataset.focus;
     if (uuidv4.length == 36) {
@@ -154,11 +154,7 @@ function attachDeleteLisntener(TaskTrackerMain) {
     }
     const modal = e.target.closest("#modal");
     closeModal(modal);
-    renderPage();
+    renderPage(undefined, TaskTrackerMain);
   });
 }
 
-export default function attachModalListeners(TaskTrackerMain) {
-  attachModalLisnters(TaskTrackerMain);
-  attachDeleteLisntener(TaskTrackerMain);
-}
