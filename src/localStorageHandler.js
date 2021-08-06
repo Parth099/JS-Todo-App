@@ -1,6 +1,6 @@
 import Task from "./task.js";
 
-export default class localStorageHandler {
+export default class LocalStorageHandler {
   constructor(arr) {
     //check for LOCALSTR collisions
     const ghFocus = localStorage.getItem("project-focus-GHPAGES");

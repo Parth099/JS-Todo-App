@@ -1,4 +1,3 @@
-import { TaskTrackerMain } from "./index.js";
 import settingsIcn from "./img/settings.png";
 
 function checkboxListener(event) {

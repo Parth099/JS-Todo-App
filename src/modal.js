@@ -26,7 +26,7 @@ const funcPointer = submitHandler.bind(submitInfo);
 let targetId;
 
 export function attachModalLisntener(TaskTrackerMain) {
-  submitBTN.TaskTracker = TaskTrackerMain;
+  submitInfo.TaskTracker = TaskTrackerMain; //set up TaskTrackerPTR
   submitBTN.removeEventListener("click", funcPointer);
   submitBTN.addEventListener("click", funcPointer);
 
@@ -105,6 +105,7 @@ function loadProjects(taskProjects) {
 }
 
 function saveUpdate(modal, TaskTrackerMain) {
+  console.log(TaskTrackerMain);
   const updateSuccess = TaskTrackerMain.updateTask(
     targetId,
     mTitle.value,
@@ -137,11 +138,11 @@ function addNewTask(modal, TaskTrackerMain) {
 
 function submitHandler() {
   // this.isAddition  this.isUpdate, while both are not needed using 2 vars can help me reduce errors
-
+  console.log(this);
   if (this.isUpdate) {
-    this.TaskTracker.saveUpdate(this.modal);
+    saveUpdate(this.modal, this.TaskTracker);
   } else {
-    this.TaskTracker.addNewTask(this.modal);
+    addNewTask(this.modal, this.TaskTracker);
   }
 }
 
@@ -150,11 +151,10 @@ export function attachDeleteLisntener(TaskTrackerMain) {
     const uuidv4 = e.target.closest("[data-focus]").dataset.focus;
     if (uuidv4.length == 36) {
       // guard
-      TaskTrackerM.deleteTask(uuidv4);
+      TaskTrackerMain.deleteTask(uuidv4);
     }
     const modal = e.target.closest("#modal");
     closeModal(modal);
     renderPage(undefined, TaskTrackerMain);
   });
 }
-

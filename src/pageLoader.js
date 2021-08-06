@@ -4,7 +4,7 @@ import { attachModalLisntener } from "./modal.js";
 const links = document.querySelectorAll(
   "#sideMenu > ul.menu-main > li > a.link"
 );
-
+const projectNavLink = document.querySelector("#project-nav");
 export function isBlank(str) {
   return !str || /^\s*$/.test(str);
 }
@@ -48,8 +48,7 @@ export function renderPage(pageTitle, TaskTrackerMain) {
   tableCont.appendChild(tableHead);
   tableCont.appendChild(tableData);
   AP.appendChild(tableCont);
-  console.log("ERR");
-  attachModalLisntener();
+  attachModalLisntener(TaskTrackerMain);
 }
 
 function clearPage() {
@@ -76,7 +75,7 @@ function projectLinkListener(e) {
     }
   }
 
-  renderPage(focus, TaskTrackerMain);
+  renderPage(focus, this.TaskTrackerMain);
 }
 function projectExtListener(e) {
   const preActive = document.querySelector("ul.menu-main li a.active");
@@ -90,6 +89,7 @@ function projectExtListener(e) {
     extLinks[i].classList.remove("active");
   }
   */
+  projectNavLink.classList.remove("active");
   renderPage(e.target.textContent, this.TaskTrackerMain);
 }
 
@@ -128,7 +128,6 @@ function attachProjectLinks(TaskTrackerMain) {
 
 function renderProjectsInfo(TaskTrackerMain) {
   const counter = TaskTrackerMain.projectCounter();
-  console.log("hit", counter);
   const AP = attachPoint();
   let projectLinkCont;
   let projectLink;
@@ -161,7 +160,7 @@ function renderProjectsInfo(TaskTrackerMain) {
     projectLinkCont.appendChild(projectLinkText);
     AP.appendChild(projectLinkCont);
   });
-  attachProjectLinks(counter);
+  attachProjectLinks(TaskTrackerMain);
 }
 
 //modal
