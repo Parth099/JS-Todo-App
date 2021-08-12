@@ -1,9 +1,7 @@
 import DOMTaskTable from "./DOMTaskTable.js";
 import { attachModalLisntener } from "./modal.js";
 
-const links = document.querySelectorAll(
-  "#sideMenu > ul.menu-main > li > a.link"
-);
+const links = document.querySelectorAll("#sideMenu > ul.menu-main > li > a.link");
 const projectNavLink = document.querySelector("#project-nav");
 export function isBlank(str) {
   return !str || /^\s*$/.test(str);
@@ -43,7 +41,7 @@ export function renderPage(pageTitle, TaskTrackerMain) {
 
   table = new DOMTaskTable(taskList);
   const tableHead = table.createTableTitle();
-  const tableData = table.renderTableData();
+  const tableData = table.renderTableData(TaskTrackerMain);
 
   tableCont.appendChild(tableHead);
   tableCont.appendChild(tableData);
@@ -141,18 +139,13 @@ function renderProjectsInfo(TaskTrackerMain) {
     projectLink = document.createElement("a");
     projectLink.classList.add("project-page-link");
 
-    projectLink.addEventListener(
-      "click",
-      projectLinkListener.bind({ TaskTrackerMain })
-    );
+    projectLink.addEventListener("click", projectLinkListener.bind({ TaskTrackerMain }));
 
     keyText = isBlank(key) ? "Home" : key;
     projectLink.textContent = `${keyText._capitalize()}`;
 
     projectLinkText = document.createElement("p");
-    projectLinkText.textContent = `${counter[key]}  ${
-      counter[key] === 1 ? "Task" : "Tasks"
-    }`;
+    projectLinkText.textContent = `${counter[key]}  ${counter[key] === 1 ? "Task" : "Tasks"}`;
     projectLinkCont.appendChild(projectLinkText);
     projectLinkText.classList.add("project-page-link-text");
 

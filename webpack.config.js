@@ -1,13 +1,7 @@
 const path = require("path");
 
 module.exports = {
-  entry: [
-    "./src/index.js",
-    "./src/pageLoader.js",
-    "./src/DOMTaskTable.js",
-    "./src/taskTracker.js",
-    "./src/localStorageHandler.js",
-  ],
+  entry: ["./src/index.js", "./src/pageLoader.js", "./src/DOMTaskTable.js", "./src/taskTracker.js", "./src/localStorageHandler.js"],
   output: {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),
@@ -25,6 +19,18 @@ module.exports = {
           filename: "images/[hash][ext][query]",
         },
       },
+      {
+        test: /\.m?js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: [["@babel/preset-env", { targets: "defaults" }]],
+          },
+        },
+      },
     ],
   },
+  mode: "development",
+  devtool: "source-map",
 };

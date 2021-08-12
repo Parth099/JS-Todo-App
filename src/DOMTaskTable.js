@@ -1,20 +1,24 @@
 import settingsIcn from "./img/settings.png";
 
-function checkboxListener(event) {
-  const parentNode = event.currentTarget.parentNode.parentNode;
-  if (typeof parentNode === "undefined") {
-    return;
-  }
-  parentNode.classList.toggle("crossout");
-  const id = parentNode.getAttribute("data-task-id");
-  TaskTrackerMain.completeXOR(id);
+function attachCheckBoxListener(chbx, TaskTrackerMain) {
+  const checkerFunc = function checkboxListener(event) {
+    const InternalTaskTracker = TaskTrackerMain;
+    const parentNode = event.currentTarget.parentNode.parentNode;
+    if (typeof parentNode === "undefined") {
+      return;
+    }
+    parentNode.classList.toggle("crossout");
+    const id = parentNode.getAttribute("data-task-id");
+    InternalTaskTracker.completeXOR(id);
+  };
+  chbx.addEventListener("click", checkerFunc);
 }
 
 class DOMTaskTable {
   constructor(internalTaskArray) {
     this.tasks = internalTaskArray ?? [];
   }
-  createTableRow(titleText, dueDateText, prioText, isCompleted, taskId) {
+  createTableRow(titleText, dueDateText, prioText, isCompleted, taskId, TaskTrackerMain) {
     if (typeof titleText === "undefined") {
       return;
     }
@@ -41,7 +45,9 @@ class DOMTaskTable {
     ckbx = document.createElement("input");
     ckbx.setAttribute("type", "checkbox");
     ckbx.classList.add("table-ckbx");
-    ckbx.addEventListener("click", checkboxListener);
+    if (TaskTrackerMain) {
+      attachCheckBoxListener(ckbx, TaskTrackerMain);
+    }
 
     if (isCompleted) {
       tableRowCont.classList.toggle("crossout");
@@ -89,28 +95,16 @@ class DOMTaskTable {
     return tableRowCont;
   }
   createTableTitle() {
-    let ele = this.createTableRow(
-      "Title",
-      "Due Date",
-      "Priority",
-      "",
-      "table-head"
-    );
+    let ele = this.createTableRow("Title", "Due Date", "Priority", "", "table-head");
     ele.classList.toggle("title");
     ele.querySelector("input").remove();
     return ele;
   }
-  renderTableData() {
+  renderTableData(TaskTrackerMain) {
     const container = document.createElement("div");
     let rowData;
     for (let obj of this.tasks) {
-      rowData = this.createTableRow(
-        obj.title,
-        obj.dueDate,
-        obj.priority,
-        obj.isComplete,
-        obj.id
-      );
+      rowData = this.createTableRow(obj.title, obj.dueDate, obj.priority, obj.isComplete, obj.id, TaskTrackerMain);
       if (typeof rowData != "undefined") {
         container.appendChild(rowData);
       }
