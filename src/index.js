@@ -92,8 +92,3 @@ const addProjectBtns = document.querySelectorAll(".add-project-btn");
 for (let btn = 0; btn < addProjectBtns.length; btn++) {
   addProjectBtns[btn].addEventListener("click", toggleActiveForMenu);
 }
-
-document.getElementById("debug").addEventListener("click", function (evt) {
-  console.log(TaskTrackerMain.tasks);
-  console.log(localStorage);
-});
