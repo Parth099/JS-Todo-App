@@ -16,9 +16,7 @@ import { attachModalLisntener, attachDeleteLisntener } from "./modal.js";
 attachNav("img.header-img[data-nav-icon]"); //nav gains hide and show func
 attachModalLisntener(TaskTrackerMain); //gives the modal's buttons functionalty
 attachDeleteLisntener(TaskTrackerMain); //gives delete task func!
-const links = document.querySelectorAll(
-  "#sideMenu > ul.menu-main > li > a.link"
-);
+const links = document.querySelectorAll("#sideMenu > ul.menu-main > li > a.link");
 
 let currPage = "Home";
 renderPage(currPage, TaskTrackerMain);
@@ -28,10 +26,7 @@ for (let link = 0; link < links.length; link++) {
 }
 
 function linkFocusSelector(e) {
-  if (
-    e.target.classList.contains("active") &&
-    e.target.textContent != "Projects"
-  ) {
+  if (e.target.classList.contains("active") && e.target.textContent != "Projects") {
     //stops spamming and calling renderPage()
     return;
   }
@@ -97,3 +92,8 @@ const addProjectBtns = document.querySelectorAll(".add-project-btn");
 for (let btn = 0; btn < addProjectBtns.length; btn++) {
   addProjectBtns[btn].addEventListener("click", toggleActiveForMenu);
 }
+
+document.getElementById("debug").addEventListener("click", function (evt) {
+  console.log(TaskTrackerMain.tasks);
+  console.log(localStorage);
+});

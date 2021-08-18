@@ -2,8 +2,7 @@ import { renderPage } from "./pageLoader";
 
 // model open/close
 const openModalButtons = () => document.querySelectorAll("[data-modal-target]");
-const closeModalButtons = () =>
-  document.querySelectorAll("[data-close-button]");
+const closeModalButtons = () => document.querySelectorAll("[data-close-button]");
 const overlay = document.querySelector(".overlay");
 
 // model read/write to HTML
@@ -39,8 +38,10 @@ export function attachModalLisntener(TaskTrackerMain) {
       const taskObj = TaskTrackerMain.getTaskById(targetId);
       loadProjects(TaskTrackerMain.getProjects());
 
+      submitInfo.isUpdate = false;
+      submitInfo.isAddition = false;
       if (button.dataset.addBtn == "true") {
-        mTitle.value = "";
+        mTitle.value = "ADD";
         mPrio.value = "";
         mProject.value = "";
         mDescrip.value = "";
@@ -105,15 +106,7 @@ function loadProjects(taskProjects) {
 }
 
 function saveUpdate(modal, TaskTrackerMain) {
-  console.log(TaskTrackerMain);
-  const updateSuccess = TaskTrackerMain.updateTask(
-    targetId,
-    mTitle.value,
-    mDescrip.value,
-    mDueDate.value,
-    mPrio.value,
-    mProject.value
-  );
+  const updateSuccess = TaskTrackerMain.updateTask(targetId, mTitle.value, mDescrip.value, mDueDate.value, mPrio.value, mProject.value);
   renderPage(undefined, TaskTrackerMain);
   if (updateSuccess) {
     closeModal(modal);
@@ -123,13 +116,8 @@ function saveUpdate(modal, TaskTrackerMain) {
 }
 
 function addNewTask(modal, TaskTrackerMain) {
-  const additionSuccess = TaskTrackerMain.addNewTask(
-    mTitle.value,
-    mDescrip.value,
-    mDueDate.value,
-    mPrio.value,
-    mProject.value
-  );
+  //console.log(modal);
+  const additionSuccess = TaskTrackerMain.addNewTask(mTitle.value, mDescrip.value, mDueDate.value, mPrio.value, mProject.value);
   if (additionSuccess) {
     closeModal(modal);
     renderPage(undefined, TaskTrackerMain);
@@ -138,7 +126,7 @@ function addNewTask(modal, TaskTrackerMain) {
 
 function submitHandler() {
   // this.isAddition  this.isUpdate, while both are not needed using 2 vars can help me reduce errors
-  console.log(this);
+  console.log("hit", this.isUpdate);
   if (this.isUpdate) {
     saveUpdate(this.modal, this.TaskTracker);
   } else {

@@ -3,12 +3,13 @@ import Task from "./task.js";
 export default class LocalStorageHandler {
   constructor(arr) {
     //check for LOCALSTR collisions
-    const ghFocus = localStorage.getItem("project-focus-GHPAGES");
-    if (typeof ghFocus === "undefined") {
-      localStorage.setItem("project-focus-GHPAGES", "todo-app");
-      localStorage.clear();
-    }
-    if (localStorage.length < 3) {
+    // const ghFocus = localStorage.getItem("project-focus-GHPAGES");
+    // if (typeof ghFocus === "undefined") {
+    //   localStorage.setItem("project-focus-GHPAGES", "todo-app");
+    //   localStorage.clear();
+    //}
+
+    if (localStorage.length < 2) {
       localStorage.clear();
     }
     this._internalCount = localStorage.getItem("MAX") ?? 0;
@@ -23,13 +24,13 @@ export default class LocalStorageHandler {
     if (this.isInit) {
       return;
     }
-    this.isInit ^= 1;
 
     const existingData = this.readFromExistingStorage();
-    if (existingData) {
+    if (existingData != 0) {
       return;
     }
 
+    this.isInit ^= 1;
     let taskToJson;
     for (let task of this.taskArr) {
       this.TaskHash[task.id] = this._internalCount;
@@ -54,6 +55,7 @@ export default class LocalStorageHandler {
   }
   readFromExistingStorage() {
     if (localStorage.length == 0) return 0;
+    if (this.isInit) return 1; //block reread
     let idx = 0;
     let JSON_OBJ, item;
     let limit = parseInt(localStorage.getItem("MAX"));

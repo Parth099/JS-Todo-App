@@ -1,44 +1,27 @@
-import Task from './task.js';
-import LocalStorageHandler from './localStorageHandler.js';
+import Task from "./task.js";
+import LocalStorageHandler from "./localStorageHandler.js";
 
-const messagePlane = document.getElementById('add-project-text-info');
+const messagePlane = document.getElementById("add-project-text-info");
 
 function isBlank(str) {
   return !str || /^\s*$/.test(str);
 }
 class TaskTracker {
   constructor() {
-    this.focus = 'home';
+    this.focus = "home";
     this.projectsSet = new Set();
-    this.projectsSet.add('');
-    this.projectsSet.add('today');
+    this.projectsSet.add("");
+    this.projectsSet.add("today");
     this.localStorageHandler = new LocalStorageHandler([]);
     this.tasks = [...this.localStorageHandler.savedTaskArr];
-    if (this.tasks.length < 1) {
+    if (this.tasks.length === 0) {
+      console.log("no tasks found");
       this.tasks = [
-        new Task('Learn HashMaps', '', 'none', 'High', true, 'CS'),
-        new Task('Learn Linked Lists', '', 'none', 'Medium', true, 'CS'),
-        new Task('Learn Arrays', '', 'none', 'Low', true, 'CS'),
-        new Task('Learn Queues', '', 'none', 'Low', true, 'CS'),
-        new Task('Learn Stacks', '', 'none', 'Medium', false, 'CS'),
-        new Task('Learn R/B Trees', ':(', 'none', 'Low', false, 'CS'),
-        new Task('Learn Graphs', ':(', 'none', 'Low', false, 'CS'),
-
-        new Task('Buy Rail Pass', '$628', 'none', 'Low', false, 'Travel'),
-        new Task('Visit 7/11', 'Slurpee!', 'none', 'Low', true, 'Travel'),
-
-        new Task(
-          'Pick Classes',
-          '18 credits!',
-          'none',
-          'Low',
-          false,
-          'College',
-        ),
-        new Task('Pay College Fee', '$$$$$', 'none', 'Low', false, 'College'),
-        new Task('Cry in the corner', ':*(', 'none', 'Low', true, 'College'),
-
-        new Task('Buy Banana(SINGLE)', 'Tasty', 'none', 'High', true, 'today'),
+        new Task("Learn HashMaps", "", "none", "High", true, "CS"),
+        new Task("Pay College Fee", "$$$$$", "none", "Low", false, "College"),
+        //new Task("Buy Rail Pass", "$628", "none", "Low", false, "Travel"),
+        //new Task("Pick Classes", "18 credits!", "none", "Low", false, "College"),
+        new Task("Assault Soga", "", new Date("2021-08-23"), "High", false, "Temple Activities"),
       ];
       this.localStorageHandler = new LocalStorageHandler(this.tasks);
     }
@@ -52,16 +35,14 @@ class TaskTracker {
     if (cf) {
       cf = cf.toLowerCase();
     }
-    this.focus = cf ?? 'home';
+    this.focus = cf ?? "home";
   }
 
   getTasks() {
-    if (this.currFocus == 'home') {
+    if (this.currFocus == "home") {
       return this.tasks;
     }
-    const selectedTasks = this.tasks.filter(
-      (task) => task.project.toLowerCase() === this.currFocus && task.title,
-    );
+    const selectedTasks = this.tasks.filter((task) => task.project.toLowerCase() === this.currFocus && task.title);
     return selectedTasks;
   }
 
@@ -78,7 +59,7 @@ class TaskTracker {
   projectCounter() {
     const collections = {};
     this.tasks.forEach((task) => {
-      if (typeof collections[task.project] === 'undefined') {
+      if (typeof collections[task.project] === "undefined") {
         collections[task.project] = 0;
       }
       if (task.title) {
@@ -91,10 +72,10 @@ class TaskTracker {
 
   addProject(p) {
     // SOLID VIOLATION
-    messagePlane.textContent = '';
+    messagePlane.textContent = "";
     const projectToAdd = p;
     p = p.toLowerCase().trim();
-    if (p == 'home') {
+    if (p == "home") {
       return false;
     }
     if (this.projectsSet.has(p)) {
@@ -102,9 +83,7 @@ class TaskTracker {
       return false;
     }
     this.projectsSet.add(projectToAdd);
-    this.tasks.push(
-      new Task(undefined, 'a', undefined, 'a', false, projectToAdd),
-    ); // empty task object for local strorage parser
+    this.tasks.push(new Task(undefined, "a", undefined, "a", false, projectToAdd)); // empty task object for local strorage parser
     return true;
   }
 
@@ -133,14 +112,7 @@ class TaskTracker {
     if (isBlank(nTitle) || isBlank(nPrio)) {
       return 0;
     }
-    const newTask = new Task(
-      nTitle,
-      nDescrip,
-      nDueDate,
-      nPrio,
-      false,
-      nProject,
-    );
+    const newTask = new Task(nTitle, nDescrip, nDueDate, nPrio, false, nProject);
     this.tasks.push(newTask);
     this.localStorageHandler.addNewTask(newTask);
     return 1;
@@ -148,7 +120,7 @@ class TaskTracker {
 
   deleteTask(uuid) {
     const idx = this.tasks.findIndex((ele) => ele.id == uuid);
-    if (typeof idx === 'undefined') {
+    if (typeof idx === "undefined") {
       return;
     }
     this.tasks.splice(idx, 1);
