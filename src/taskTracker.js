@@ -15,7 +15,6 @@ class TaskTracker {
     this.localStorageHandler = new LocalStorageHandler([]);
     this.tasks = [...this.localStorageHandler.savedTaskArr];
     if (this.tasks.length === 0) {
-      console.log("no tasks found");
       this.tasks = [
         new Task("Learn HashMaps", "", "none", "High", true, "CS"),
         new Task("Pay College Fee", "$$$$$", "none", "Low", false, "College"),
