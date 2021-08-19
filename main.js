@@ -501,7 +501,7 @@ function attachModalLisntener(TaskTrackerMain) {
       submitInfo.isAddition = false;
 
       if (button.dataset.addBtn == "true") {
-        mTitle.value = "ADD";
+        mTitle.value = "";
         mPrio.value = "";
         mProject.value = "";
         mDescrip.value = "";
@@ -1010,7 +1010,6 @@ var TaskTracker = /*#__PURE__*/function () {
     this.tasks = _toConsumableArray(this.localStorageHandler.savedTaskArr);
 
     if (this.tasks.length === 0) {
-      console.log("no tasks found");
       this.tasks = [new _task_js__WEBPACK_IMPORTED_MODULE_0__.default("Learn HashMaps", "", "none", "High", true, "CS"), new _task_js__WEBPACK_IMPORTED_MODULE_0__.default("Pay College Fee", "$$$$$", "none", "Low", false, "College"), //new Task("Buy Rail Pass", "$628", "none", "Low", false, "Travel"),
       //new Task("Pick Classes", "18 credits!", "none", "Low", false, "College"),
       new _task_js__WEBPACK_IMPORTED_MODULE_0__.default("Assault Soga", "", new Date("2021-08-23"), "High", false, "Temple Activities")];
