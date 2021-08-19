@@ -41,7 +41,7 @@ export function attachModalLisntener(TaskTrackerMain) {
       submitInfo.isUpdate = false;
       submitInfo.isAddition = false;
       if (button.dataset.addBtn == "true") {
-        mTitle.value = "ADD";
+        mTitle.value = "";
         mPrio.value = "";
         mProject.value = "";
         mDescrip.value = "";
