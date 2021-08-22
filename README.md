@@ -4,7 +4,6 @@ This Todo App was built using Webpack technologies using:
 * JavaScript
 # External Libraries
 * Uuid - https://www.npmjs.com/package/uuid [Public]
-
 Uuid is used to give tasks in both LocalStorage & Memory an identity so they can be saved and altered.  
 
 # Features
